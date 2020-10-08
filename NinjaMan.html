@@ -57,6 +57,10 @@
             background-size: contain;
             background-image: url('./ninjaman/onigiri.png');
         }
+
+        #score {
+            padding: 10px;
+        }
     </style>
 </head>
 
@@ -64,8 +68,44 @@
     <div id="world">
     </div>
     <div id="ninjaman"></div>
+    <div id="score"></div>
+
     <script type="text/javascript">
+        var world = [];
+
+        window.onload = function () {
+            var numRows = 10, numColmn = 5;
+            var matrix = []
+            for (var rowx = 0; rowx < numRows; rowx++) {
+                var inner = []
+                for (var colmny = 0; colmny < numColmn; colmny++) {
+                    if (rowx == 0 || rowx == numRows - 1) {
+                        inner[colmny] = 1;
+                    }
+                    else if (colmny == 0 || colmny == numColmn - 1) {
+                        inner[colmny] = 1;
+                    } else if (colmny == 1 && rowx == 1) {
+                        inner[colmny] = 0;
+                    } else if (inner[colmny - 1] == 1 || matrix[rowx - 1][colmny] == 1 || matrix[rowx - 1][colmny - 1] == 1) {
+                        inner[colmny] = 3;
+                    }
+                    else {
+                        inner[colmny] = Math.round(Math.random() * 2);
+                    }
+                }
+                matrix[rowx] = inner;
+            }
+            world = matrix;
+            drawWorld();
+            //drawNinjaman();
+            console.log(matrix);
+
+        };
+
+
         var score = 0, point = 10;
+
+        /*
         var world = [
             [1, 1, 1, 1, 1],
             [1, 0, 2, 2, 1],
@@ -78,7 +118,7 @@
             [1, 2, 1, 2, 1],
             [1, 2, 2, 2, 1],
             [1, 1, 1, 1, 1],
-        ]
+        ]*/
         var worldDict = {
             0: 'blank',
             1: 'wall',
@@ -107,14 +147,11 @@
         function drawNinjaman() {
             document.getElementById('ninjaman').style.left = ninjaman.x * 40 + "px";
             document.getElementById('ninjaman').style.top = ninjaman.y * 40 + "px";
+            document.getElementById('score').innerHTML = "Score = " + score;
         }
         drawNinjaman();
 
 
-        function drawNinjaman() {
-            document.getElementById('ghost').style.left = ninjaman.x * 40 + "px";
-            document.getElementById('ghost').style.top = ninjaman.y * 40 + "px";
-        }
 
 
         document.onkeydown = function (e) {
