@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ninja Game</title>
+</head>
+
+<body>
+    <div id="background">
+        <div id="character"
+             style='position: absolute; top:100px; left:450px; background-image: url("img/down1.png"); width:59px; height:86px;'>
+        </div>
+    </div>
+    <script>
+        var leftValue = 450, topValue = 100, movingStep = 10, direction = 'down', stepLeg = 1;
+
+        function update(params) {
+            if (stepLeg == 1) {
+                stepLeg = 2;
+            } else {
+                stepLeg = 1;
+            }
+            document.getElementById('character').style.left = leftValue + "px";
+            document.getElementById('character').style.top = topValue + "px";
+            document.getElementById('character').style.backgroundImage = 'url("img/' + direction + stepLeg + '.png")';
+        }
+
+        document.onkeydown = function (e) {
+            console.log(e)
+            if (e.keyCode == 37 && leftValue > 0) {
+                // Left
+                leftValue -= movingStep;
+                direction = 'left';
+            } else if (e.keyCode == 38 && topValue > 0) {
+                // Up
+                topValue -= movingStep;
+                direction = 'top';
+            } else if (e.keyCode == 39 && leftValue < 500) {
+                // Right
+                leftValue += movingStep;
+                direction = 'right';
+
+            } else if (e.keyCode == 40 && topValue < 500) {
+                // Down
+                topValue += movingStep;
+                direction = 'down';
+            }
+            update();
+        }
+    </script>
+</body>
+
+</html>

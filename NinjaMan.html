@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ninja Man</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .row {
+            line-height: 0;
+        }
+
+        .wall {
+            background-color: blue;
+            height: 40px;
+            width: 40px;
+            display: inline-block;
+        }
+
+        .blank {
+            background-color: black;
+            height: 40px;
+            width: 40px;
+            display: inline-block;
+        }
+
+        .sushi {
+            background-color: black;
+            height: 40px;
+            width: 40px;
+            display: inline-block;
+            background-image: url('./ninjaman/sushi.png');
+            background-size: contain;
+
+        }
+
+        #ninjaman {
+            background-color: black;
+            height: 40px;
+            width: 40px;
+            background-size: contain;
+            background-image: url('./ninjaman/ninja.gif');
+            background-size: contain;
+            position: absolute;
+        }
+
+        .onigiri {
+            background-color: black;
+            height: 40px;
+            width: 40px;
+            display: inline-block;
+
+            background-size: contain;
+            background-image: url('./ninjaman/onigiri.png');
+        }
+    </style>
+</head>
+
+<body>
+    <div id="world">
+    </div>
+    <div id="ninjaman"></div>
+    <script type="text/javascript">
+        var score = 0, point = 10;
+        var world = [
+            [1, 1, 1, 1, 1],
+            [1, 0, 2, 2, 1],
+            [1, 2, 1, 2, 1],
+            [1, 2, 2, 2, 1],
+            [1, 2, 3, 2, 1],
+            [1, 2, 1, 2, 1],
+            [1, 2, 2, 3, 1],
+            [1, 2, 2, 2, 1],
+            [1, 2, 1, 2, 1],
+            [1, 2, 2, 2, 1],
+            [1, 1, 1, 1, 1],
+        ]
+        var worldDict = {
+            0: 'blank',
+            1: 'wall',
+            2: 'sushi',
+            3: 'onigiri',
+            4: 'ghosts',
+        }
+
+        function drawWorld() {
+            var output = "";
+            for (var row = 0; row < world.length; row++) {
+                output += "<div class='row'>"
+                for (var x = 0; x < world[row].length; x++) {
+                    output += "<div class='" + worldDict[world[row][x]] + "'></div>"
+                }
+                output += "</div>";
+            }
+            document.getElementById('world').innerHTML = output;
+        }
+        drawWorld();
+
+        var ninjaman = {
+            x: 1,
+            y: 1,
+        }
+        function drawNinjaman() {
+            document.getElementById('ninjaman').style.left = ninjaman.x * 40 + "px";
+            document.getElementById('ninjaman').style.top = ninjaman.y * 40 + "px";
+        }
+        drawNinjaman();
+
+
+        function drawNinjaman() {
+            document.getElementById('ghost').style.left = ninjaman.x * 40 + "px";
+            document.getElementById('ghost').style.top = ninjaman.y * 40 + "px";
+        }
+
+
+        document.onkeydown = function (e) {
+            if (e.keyCode == 37) {
+                // Left
+                if (world[ninjaman.y][ninjaman.x - 1] != 1) {
+                    ninjaman.x--;
+                }
+            } else if (e.keyCode == 38) {
+                // Up
+                if (world[ninjaman.y - 1][ninjaman.x] != 1) {
+                    ninjaman.y--;
+                }
+            } else if (e.keyCode == 39) {
+                // Right
+                if (world[ninjaman.y][ninjaman.x + 1] != 1) {
+                    ninjaman.x++;
+                }
+            } else if (e.keyCode == 40) {
+                // Down
+                if (world[ninjaman.y + 1][ninjaman.x] != 1) {
+                    ninjaman.y++;
+                }
+            }
+
+            if (world[ninjaman.y][ninjaman.x] == 2 || world[ninjaman.y][ninjaman.x] == 3) {
+                world[ninjaman.y][ninjaman.x] = 0;
+                score += point;
+                drawWorld();
+            }
+            console.log(score);
+            drawNinjaman();
+        }
+
+
+
+        var ghostStart = {
+            x: 6,
+            y: 3,
+        }
+
+        var ghosts = {
+            0: 'bluey',
+            1: 'pinky',
+            2: 'pumpky',
+            3: 'red',
+            4: 'scaredy',
+        }
+
+
+    </script>
+
+</body>
+
+</html>
