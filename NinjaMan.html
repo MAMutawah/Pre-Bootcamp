@@ -103,7 +103,7 @@
         };
 
 
-        var score = 0, point = 10;
+        var score = 0, point = 1;
 
         /*
         var world = [
@@ -179,7 +179,7 @@
 
             if (world[ninjaman.y][ninjaman.x] == 2 || world[ninjaman.y][ninjaman.x] == 3) {
                 world[ninjaman.y][ninjaman.x] = 0;
-                score += point;
+                score += point; // Keep score of how many sushi has been eaten
                 drawWorld();
             }
             console.log(score);
@@ -201,6 +201,11 @@
             4: 'scaredy',
         }
 
+    // Done (Basic) Keep Score of how many Sushi's NinjaMan eats
+    // Done (Basic) Add Onigiri as an alternative food to eat 
+    // Half (Intermediate) Random world generated when loading the page
+    // (Advanced) Add Ghosts that chase NinjaMan around
+    // (Advanced) Give NinjaMan 3 lives where Game Over occurs when a ghost hits NinjaMan 3 times
 
     </script>
 
